@@ -2,3 +2,6 @@
 /playground
 dev.html
 jsdoc.json
+*.iml
+*.ipr
+.idea/

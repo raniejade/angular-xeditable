@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2014-01-10 
+Build date: 2014-02-04 
 */
 /**
  * Angular-xeditable module 
@@ -745,7 +745,9 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // element wrapped by form
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
-          hasForm = true;
+          if(eFormCtrl.$addEditable) {
+            hasForm = true;
+          }
         } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
           var getter = $parse(attrs.eForm)(scope);
           if(getter) { // form exists in scope (above), e.g. editable column
@@ -799,9 +801,6 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         if(hasForm) {
           if(eFormCtrl) {
             scope.$form = eFormCtrl;
-            if(!scope.$form.$addEditable) {
-              throw 'Form with editable elements should have `editable-form` attribute.';
-            }
             scope.$form.$addEditable(eCtrl);
           } else {
             // future form (below): add editable controller to buffer and add to form later
